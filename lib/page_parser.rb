@@ -1,20 +1,28 @@
 require 'rest-open-uri'
+require 'hpricot'
 
 class PageParser
   attr_accessor :data
 
-  def initialize(url)
-    html = ""
-    open(url) {|f|
-        f.each_line { |line| html << line }
+  def initialize(args={})
+    html = nil
+    if (args[:url])
+      html = ""
+      open(args[:url]) {|f|
+          f.each_line { |line| html << line }
+        }
+    end
+    @data = html || args[:html] 
+  end
+  
+  def to_tiles
+    tiles = []
+    html = Hpricot(@data)
+    html.search("a[@alt&gt;0]").each {|anchor|
+        tiles << Tile.parse(anchor.to_html)
       }
-    @data = html
+      
+    tiles
   end
   
-
-  
-  # parses the HTML and returns an array of tiles
-  def parse_html(html)
-
-  end
 end
