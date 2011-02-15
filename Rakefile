@@ -7,7 +7,12 @@ task :default => 'test:unit'
 desc "Deletes the contents of the output folder"
 task :clean do
   pwd = `pwd`.chomp("\n")
-  %x[rm -rf "#{pwd}/output/*"]
+  rm_rf = %Q{rm -rf "#{pwd}/output/"}
+  puts rm_rf
+  %x[#{rm_rf}]
+  mkdir = "mkdir #{pwd}/output"
+  puts mkdir
+  %x[mkdir "#{pwd}/output"]
 end
 
 namespace :retrieve do
