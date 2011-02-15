@@ -1,1 +1,8 @@
 A parser program for retrieving the tile *.eps files and associated data from 18XX.info/tiles.
+
+To use, execute:
+
+	rake get:all
+	
+Results are placed in the ./output directory as unified *.yml files and *.eps files (the *.yml
+files also contain the EPS data).
