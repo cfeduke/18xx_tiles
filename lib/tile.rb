@@ -9,13 +9,13 @@ class Tile
     BASE_18XX_INFO_TILE_URL + @url
   end
   
-  def to_eps_url
+  def eps_url
     BASE_18XX_INFO_TILE_URL + @url.sub(/\.html/, '.eps')
   end
   
   def get_eps
     @eps_data = ""
-    open(to_eps_url) { |eps| eps.each_line { |line| @eps_data << line } }
+    open(eps_url) { |eps| eps.each_line { |line| @eps_data << line } }
     raise "EPS was empty" unless @eps_data.length > 0
     @eps_data
   end
@@ -23,7 +23,13 @@ class Tile
   class << self
     def parse(anchor_html)
       tile = Tile.new
-      tile.long_name, tile.url, tile.number = %r{alt="(?<long_name>.*?)" href="(?<url>tile(?<number>\d+).html)"}.match(anchor_html).captures
+      begin
+        tile.long_name, tile.url, tile.number = %r{alt="(?<long_name>.*?)" href="(?<url>tile(?<number>(?:EU-)?\d+).html)"}.match(anchor_html).captures
+      rescue NoMethodError
+        puts "Unable to parse #{anchor_html}"
+        return nil
+      end
+      
       tile
     end
   end

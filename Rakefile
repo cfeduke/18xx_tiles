@@ -50,7 +50,7 @@ namespace :get do
   
   desc "Retrieve all tiles"
   task :all do
-    ["yellow", "green", "brown", "gray", "map"].each { |t| Rake::Task["yellow"].invoke }
+    ["yellow", "green", "brown", "gray", "map"].each { |t| Rake::Task["get:#{t}"].invoke }
   end
   
   def retrieve(html_file_name)

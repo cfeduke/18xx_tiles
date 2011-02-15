@@ -44,4 +44,12 @@ HTML
     assert_equal "1202", tiles.last.number
     assert_equal 'yellow', tiles.last.color
   end
+  
+  def test_verify_green_can_be_parsed
+    pp = PageParser.new({:url => "./test/tiles/green.html"})
+    assert_not_nil pp.data
+    assert_not_equal pp.data.length, 0
+    assert_equal 'green', pp.color
+  end
+  
 end
