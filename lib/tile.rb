@@ -1,3 +1,5 @@
+require 'rest-open-uri'
+
 class Tile
   attr_accessor :color, :long_name, :number, :eps_data, :url
   
@@ -12,7 +14,11 @@ class Tile
   end
   
   def get_eps
-    
+    @eps_data = ""
+    open(to_eps_url) { |eps| eps.each_line { |line| @eps_data << line } }
+    if @eps_data.length == 0
+      raise "EPS was empty"
+    @eps_data
   end
   
   class << self
