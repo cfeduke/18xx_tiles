@@ -16,8 +16,7 @@ class Tile
   def get_eps
     @eps_data = ""
     open(to_eps_url) { |eps| eps.each_line { |line| @eps_data << line } }
-    if @eps_data.length == 0
-      raise "EPS was empty"
+    raise "EPS was empty" unless @eps_data.length > 0
     @eps_data
   end
   
