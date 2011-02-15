@@ -24,7 +24,7 @@ class Tile
     def parse(anchor_html)
       tile = Tile.new
       begin
-        tile.long_name, tile.url, tile.number = %r{alt="(?<long_name>.*?)" href="(?<url>tile(?<number>(?:EU-)?\d+).html)"}.match(anchor_html).captures
+        tile.long_name, tile.url, tile.number = %r{alt="(?<long_name>.*?)" href="(?<url>tile(?<number>(?:EU|\d{0,2})?-?\d+).html)"}.match(anchor_html).captures
       rescue NoMethodError
         puts "Unable to parse #{anchor_html}"
         return nil

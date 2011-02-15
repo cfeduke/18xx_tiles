@@ -39,4 +39,15 @@ class TileTest < Test::Unit::TestCase
     assert_equal 'EU-82', tile.number
     assert_equal 'http://18xx.info/tiles/tileEU-82.eps', tile.eps_url
   end
+  
+  def test_parse_should_work_with_irregular_eu_tiles
+    tile = Tile.parse(%(<a alt="Tile EU120 - 18EU #120" href="tileEU120.html"><img border="0" width="90" height="78" src="tileEU120-tiny.png" /></a>))
+    assert_not_nil tile
+  end
+  
+  def test_parse_should_work_with_tile_subclasses
+    tile = Tile.parse(%(<a alt="Tile 76-364 - 1876 #364" href="tile76-364.html"><img border="0" width="90" height="78" src="tile76-364-tiny.png" /></a>))
+    assert_not_nil tile
+    assert_equal '76-364', tile.number
+  end
 end
