@@ -8,12 +8,14 @@ class PageParserTest < Test::Unit::TestCase
     pp = PageParser.new({:url => "http://www.google.com"})
     assert_not_nil pp.data
     assert_not_equal pp.data.length, 0
+    assert_equal 'unknown', pp.color
   end
   
   def test_init_with_local_html_should_retrieve_contents_of_local_file
-    pp = PageParser.new({:url => "./test/yellow.html"})
+    pp = PageParser.new({:url => "./test/tiles/yellow.html"})
     assert_not_nil pp.data
     assert_not_equal pp.data.length, 0
+    assert_equal 'yellow', pp.color
   end
   
   def test_to_tiles_should_parse_expected_number_and_values_of_tiles
@@ -33,11 +35,13 @@ class PageParserTest < Test::Unit::TestCase
     alt="Tile 1202 - 202/1876" href="tile1202.html"><img border=0 width=90 height=78 src="tile1202-tiny.png"></a></td>
     </tr></table>
 HTML
-    pp = PageParser.new({:html => html})
+    pp = PageParser.new({:html => html, :color => 'yellow'})
     assert_not_equal pp.data.length, 0
     tiles = pp.to_tiles
     assert_equal 6, tiles.length
     assert_equal "Tile 2 - 2", tiles[1].long_name
     assert_equal "Tile 1202 - 202/1876", tiles.last.long_name
+    assert_equal "1202", tiles.last.number
+    assert_equal 'yellow', tiles.last.color
   end
 end

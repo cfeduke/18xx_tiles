@@ -23,4 +23,11 @@ class TileTest < Test::Unit::TestCase
     tile.url = "tile59.html"
     assert_equal "http://18xx.info/tiles/tile59.eps", tile.to_eps_url
   end
+  
+  def test_get_eps_should_retreive_eps_data
+    tile = Tile.parse(%(<a alt="Tile 14 - 14" href="tile14.html"><img border=0 width=90 height=78 src="tile14-tiny.png"></a>))
+    tile.get_eps
+    assert_not_nil tile.eps_data
+    assert_not_equal tile.eps_data.length, 0
+  end
 end

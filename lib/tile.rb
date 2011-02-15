@@ -11,6 +11,10 @@ class Tile
     BASE_18XX_INFO_TILE_URL + @url.sub(/\.html/, '.eps')
   end
   
+  def get_eps
+    
+  end
+  
   class << self
     def parse(anchor_html)
       tile = Tile.new
